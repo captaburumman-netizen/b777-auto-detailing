@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Your Detail — B777 Auto Detailing</title>
+  <meta name="description" content="Book a premium mobile auto detail online. Exterior wash, full detail, or ceramic coating — we come to you in Edmond, OKC, and Yukon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design tokens (same as index.html) ──────────────────── */
+    :root {
+      --bg:          #0D0D0F;
+      --bg-1:        #111115;
+      --bg-2:        #161619;
+      --bg-3:        #1C1C22;
+      --surface:     #1F1F26;
+      --card:        #232329;
+      --line:        rgba(255,255,255,0.07);
+
+      --gold:        #D4A847;
+      --gold-light:  #E8C063;
+      --gold-dark:   #A07C28;
+      --gold-dim:    rgba(212,168,71,0.12);
+      --gold-glow:   rgba(212,168,71,0.25);
+      --gold-border: rgba(212,168,71,0.30);
+
+      --white:       #F4F2ED;
+      --off-white:   #C8C4BC;
+      --muted:       #7A7870;
+      --faint:       #3E3D42;
+
+      --font-h: 'Barlow Condensed', sans-serif;
+      --font-b: 'Barlow', sans-serif;
+
+      --r:  8px;
+      --r2: 16px;
+      --r3: 24px;
+      --max: 1160px;
+      --nav-h: 64px;
+      --ease: cubic-bezier(.22,.68,0,1.15);
+    }
+
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-b);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+    ul { list-style: none; }
+
+    /* ── Layout helpers ──────────────────────────────────────── */
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    .label {
+      font-family: var(--font-h);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .section-title {
+      font-family: var(--font-h);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--white);
+    }
+    .gold-line {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+      border-radius: 2px;
+    }
+
+    /* ── Buttons ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--r);
+      font-family: var(--font-h);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all 0.22s var(--ease);
+      white-space: nowrap;
+    }
+    .btn-gold { background: var(--gold); color: #0D0D0F; }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px var(--gold-glow); }
+    .btn-ghost { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.22); }
+    .btn-ghost:hover { border-color: var(--gold-border); color: var(--gold-light); transform: translateY(-2px); }
+
+    /* ── Nav ─────────────────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      background: rgba(13,13,15,0.92);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 1px 0 var(--line);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .nav-logo {
+      font-family: var(--font-h);
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-links a {
+      font-family: var(--font-h);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      transition: color 0.18s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+    .nav-links .btn { padding: 10px 22px; font-size: 0.85rem; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      width: 28px;
+      padding: 2px;
+    }
+    .hamburger span {
+      display: block;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      background: rgba(0,0,0,0.96);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu a {
+      font-family: var(--font-h);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+      transition: color 0.18s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── Page hero ───────────────────────────────────────────── */
+    .page-hero {
+      padding: calc(var(--nav-h) + 64px) 0 64px;
+      background:
+        radial-gradient(ellipse 70% 80% at 80% 50%, rgba(180,120,20,0.10) 0%, transparent 65%),
+        var(--bg);
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+    }
+    .page-hero .label { display: block; margin-bottom: 14px; }
+    .page-hero h1 {
+      font-family: var(--font-h);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--gold); }
+    .page-hero p {
+      font-size: 1.05rem;
+      color: var(--off-white);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── Calendly section ────────────────────────────────────── */
+    #booking-embed {
+      background: var(--bg-1);
+      padding: 72px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .calendly-container {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r3);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .calendly-container .calendly-inline-widget {
+      border: none;
+    }
+
+    /* ── FAQ section ─────────────────────────────────────────── */
+    #faq {
+      background: var(--bg);
+      padding: 96px 0;
+    }
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .faq-side { position: sticky; top: calc(var(--nav-h) + 32px); }
+    .faq-side .section-title { margin: 14px 0 16px; }
+    .faq-side p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+    .faq-list { display: flex; flex-direction: column; gap: 2px; }
+    .faq-item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: var(--gold-border); }
+    .faq-item[open] {
+      border-color: var(--gold-border);
+      background: linear-gradient(135deg, #1E1B10 0%, #1C1A16 100%);
+    }
+    .faq-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--font-h);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      user-select: none;
+      gap: 16px;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--gold);
+      font-weight: 400;
+      transition: transform 0.25s var(--ease), background 0.2s;
+    }
+    .faq-item[open] .faq-icon {
+      transform: rotate(45deg);
+      background: var(--gold-dim);
+    }
+    .faq-body {
+      padding: 0 24px 22px;
+      font-size: 0.93rem;
+      color: var(--off-white);
+      line-height: 1.75;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+    .faq-body ul { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+    .faq-body ul li { display: flex; gap: 10px; }
+    .faq-body ul li::before { content: '·'; color: var(--gold); flex-shrink: 0; }
+
+    /* ── Contact strip ───────────────────────────────────────── */
+    .contact-strip {
+      background: var(--bg-2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 48px 0;
+    }
+    .contact-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .contact-strip h3 {
+      font-family: var(--font-h);
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .contact-strip p { font-size: 0.9rem; color: var(--muted); }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    footer {
+      background: var(--bg-1);
+      border-top: 1px solid var(--line);
+      padding: 48px 0 32px;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+    .footer-brand .nav-logo { font-size: 1.5rem; margin-bottom: 12px; }
+    .footer-tagline { font-size: 0.88rem; color: var(--muted); line-height: 1.7; max-width: 260px; margin-bottom: 18px; }
+    .footer-contact-item { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--off-white); margin-bottom: 8px; }
+    .footer-contact-item a:hover { color: var(--gold-light); }
+    .footer-icon { width: 16px; flex-shrink: 0; color: var(--gold); font-size: 0.85rem; }
+    .footer-heading { font-family: var(--font-h); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 0.88rem; color: var(--muted); transition: color 0.18s; }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--line); flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 0.8rem; color: var(--faint); }
+    .social-links { display: flex; gap: 14px; }
+    .social-link { width: 34px; height: 34px; background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--r); display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; }
+    .social-link:hover { border-color: var(--gold-border); background: var(--gold-dim); }
+    .social-link svg { width: 15px; height: 15px; fill: var(--muted); transition: fill 0.2s; }
+    .social-link:hover svg { fill: var(--gold); }
+
+    /* Sticky mobile CTA */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 800;
+      background: rgba(13,13,15,0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--line);
+      padding: 12px 20px;
+      gap: 12px;
+    }
+    .sticky-cta a { flex: 1; justify-content: center; }
+
+    /* ── Animations ──────────────────────────────────────────── */
+    .aos {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s var(--ease);
+    }
+    .aos.in { opacity: 1; transform: none; }
+    .aos-delay-1 { transition-delay: 0.1s; }
+    .aos-delay-2 { transition-delay: 0.2s; }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .faq-layout { grid-template-columns: 1fr; gap: 40px; }
+      .faq-side { position: static; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      :root { --nav-h: 56px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .sticky-cta { display: flex; }
+      footer { padding-bottom: 76px; }
+      .contact-strip-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Nav ───────────────────────────────────────────────── -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo" aria-label="B777 Auto Detailing home">
+          B777 <span>AUTO DETAILING</span>
+        </a>
+        <ul class="nav-links" role="list">
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#gallery">Gallery</a></li>
+          <li><a href="index.html#why">About</a></li>
+          <li><a href="index.html#testimonials">Reviews</a></li>
+          <li><a href="book.html" class="btn btn-gold active">Book Now</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#gallery">Gallery</a>
+    <a href="index.html#why">About</a>
+    <a href="index.html#testimonials">Reviews</a>
+    <a href="book.html" class="btn btn-gold">Book Now</a>
+  </div>
+
+
+  <!-- ── Page hero ─────────────────────────────────────────── -->
+  <header class="page-hero" aria-labelledby="page-heading">
+    <div class="wrap">
+      <span class="label">Online Booking</span>
+      <h1 id="page-heading">Book Your<br><em>Detail Online</em></h1>
+      <p>Pick a time that works for you. We'll show up fully equipped — no drop-off, no waiting.</p>
+    </div>
+  </header>
+
+
+  <!-- ── Calendly embed ────────────────────────────────────── -->
+  <section id="booking-embed" aria-label="Online booking calendar">
+    <div class="wrap">
+      <div class="calendly-container">
+        <div
+          class="calendly-inline-widget"
+          data-url="https://calendly.com/capt-aburumman/b777-auto-detailing?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=d4a847&background_color=1f1f26&text_color=f4f2ed"
+          style="min-width:320px;height:900px;"
+        ></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────── -->
+  <section id="faq" aria-labelledby="faq-heading">
+    <div class="wrap">
+      <div class="faq-layout">
+
+        <div class="faq-side aos">
+          <div class="gold-line"></div>
+          <span class="label" style="display:block;margin:14px 0 8px;">Before You Book</span>
+          <h2 class="section-title" id="faq-heading">What to Expect</h2>
+          <p>Everything you need to know before your first appointment with B777 Auto Detailing.</p>
+          <a href="tel:5722050612" class="btn btn-ghost" style="font-size:0.88rem;padding:11px 22px;">
+            ☎ Still have questions? Call us
+          </a>
+        </div>
+
+        <div class="faq-list" role="list">
+
+          <details class="faq-item aos" open>
+            <summary>
+              What should I expect on the day of service?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>We arrive fully self-contained at your location — no access to your home or utilities needed. Here's how it goes:</p>
+              <ul>
+                <li>We text you 30 minutes before arrival</li>
+                <li>Setup takes about 10 minutes</li>
+                <li>You can go about your day — no need to supervise</li>
+                <li>We do a walk-around with you when finished before packing up</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="faq-item aos aos-delay-1">
+            <summary>
+              How long does a detail take?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>Times vary by service and vehicle condition:</p>
+              <ul>
+                <li><strong style="color:var(--gold-light)">Exterior Wash</strong> — 60 to 90 minutes</li>
+                <li><strong style="color:var(--gold-light)">Full Detail</strong> — 3 to 5 hours</li>
+                <li><strong style="color:var(--gold-light)">Ceramic Coating</strong> — 5 to 8 hours (full day)</li>
+              </ul>
+              <p style="margin-top:10px;">Heavily soiled vehicles or larger trucks/SUVs may take a bit longer. We'll give you an accurate time estimate when we confirm your booking.</p>
+            </div>
+          </details>
+
+          <details class="faq-item aos aos-delay-2">
+            <summary>
+              Do I need to prepare my car before you arrive?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>Just a few things help us give you the best result:</p>
+              <ul>
+                <li>Remove personal items, car seats, and valuables from the interior</li>
+                <li>Make sure the car is accessible — not blocked by other vehicles</li>
+                <li>If you have a garage spot, leave it open (shade helps for ceramic coatings)</li>
+                <li>That's it — we handle the rest</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="faq-item aos">
+            <summary>
+              Do you bring your own water and power?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>Yes — we are 100% self-sufficient. Our mobile unit carries a fresh water tank, a generator, a pressure washer, and all professional products. You don't need to provide anything or stay home.</p>
+            </div>
+          </details>
+
+          <details class="faq-item aos">
+            <summary>
+              What if it rains on my appointment day?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>Light rain won't stop an interior detail, but exterior work and ceramic coatings require dry conditions. If the weather is a problem, we'll reach out the evening before to reschedule at no charge — your deposit (if any) carries over automatically.</p>
+            </div>
+          </details>
+
+          <details class="faq-item aos">
+            <summary>
+              How often should I get my car detailed?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>It depends on how you use your vehicle, but here's a general guide:</p>
+              <ul>
+                <li><strong style="color:var(--gold-light)">Exterior wash</strong> — every 4 to 6 weeks</li>
+                <li><strong style="color:var(--gold-light)">Full detail</strong> — every 3 to 6 months</li>
+                <li><strong style="color:var(--gold-light)">Ceramic top-up</strong> — once a year after initial coating</li>
+              </ul>
+              <p style="margin-top:10px;">Rideshare drivers and families with kids or pets typically benefit from monthly interior cleans.</p>
+            </div>
+          </details>
+
+          <details class="faq-item aos">
+            <summary>
+              Do you service trucks and large SUVs?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>Absolutely. We detail everything from compact cars to full-size trucks, lifted SUVs, and work vans. Pricing for larger vehicles starts slightly higher due to additional time and product — you'll see the adjusted quote during booking or we'll confirm it when we contact you.</p>
+            </div>
+          </details>
+
+          <details class="faq-item aos">
+            <summary>
+              What areas do you serve?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>We currently cover:</p>
+              <ul>
+                <li>Edmond, OK (home base)</li>
+                <li>Oklahoma City (OKC) and surrounding neighborhoods</li>
+                <li>Yukon, OK</li>
+              </ul>
+              <p style="margin-top:10px;">Not sure if we reach you? Call or text us at <a href="tel:5722050612" style="color:var(--gold-light);font-weight:600;">572-205-6012</a> and we'll let you know.</p>
+            </div>
+          </details>
+
+          <details class="faq-item aos">
+            <summary>
+              Is there a cancellation fee?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-body">
+              <p>No cancellation fee — ever. Just give us at least 24 hours' notice so we can offer your slot to another client. Same-day cancellations are understood; we only ask that you try to let us know as early as possible.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Contact strip ──────────────────────────────────────── -->
+  <div class="contact-strip">
+    <div class="wrap">
+      <div class="contact-strip-inner">
+        <div>
+          <h3>Prefer to call or text?</h3>
+          <p>We're available 7 days a week — usually respond within minutes.</p>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="tel:5722050612" class="btn btn-gold">☎ 572-205-6012</a>
+          <a href="mailto:capt.marwan@hotmail.com" class="btn btn-ghost">Email Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer role="contentinfo">
+    <div class="wrap">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="nav-logo">B777 <span>AUTO DETAILING</span></div>
+          <p class="footer-tagline">Premium mobile auto detailing in Edmond, Oklahoma. We bring the showroom to you.</p>
+          <div class="footer-contact-item"><span class="footer-icon">☎</span><a href="tel:5722050612">572-205-6012</a></div>
+          <div class="footer-contact-item"><span class="footer-icon">✉</span><a href="mailto:capt.marwan@hotmail.com">capt.marwan@hotmail.com</a></div>
+          <div class="footer-contact-item"><span class="footer-icon">◉</span>Edmond, Oklahoma</div>
+        </div>
+        <div>
+          <div class="footer-heading">Services</div>
+          <ul class="footer-links">
+            <li><a href="index.html#services">Exterior Wash</a></li>
+            <li><a href="index.html#services">Full Detail</a></li>
+            <li><a href="index.html#services">Ceramic Coating</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-heading">Company</div>
+          <ul class="footer-links">
+            <li><a href="index.html#why">About Us</a></li>
+            <li><a href="index.html#gallery">Gallery</a></li>
+            <li><a href="index.html#testimonials">Reviews</a></li>
+            <li><a href="book.html">Book Now</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 B777 Auto Detailing · All rights reserved · Edmond, OK</p>
+        <div class="social-links" aria-label="Social media links">
+          <a href="#" class="social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta" aria-label="Quick actions">
+    <a href="tel:5722050612" class="btn btn-ghost">Call Now</a>
+    <a href="#booking-embed" class="btn btn-gold">Book Now</a>
+  </div>
+
+
+  <!-- ── Scripts ───────────────────────────────────────────── -->
+  <script>
+  (function() {
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    // Scroll animations
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.aos').forEach(el => io.observe(el));
+
+  })();
+  </script>
+
+  <!-- Calendly widget -->
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+</body>
+</html>
