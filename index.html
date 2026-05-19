@@ -865,21 +865,114 @@
       border: 1px solid var(--line);
       border-radius: var(--r3);
       overflow: hidden;
-      min-height: 680px;
       display: flex;
       flex-direction: column;
     }
-    .calendly-wrapper {
+    .booking-cta-card {
       flex: 1;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 48px;
+      gap: 0;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,168,71,0.08) 0%, transparent 65%),
+        var(--surface);
     }
-    .calendly-wrapper .calendly-inline-widget {
+    .bk-cta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 100px;
+      font-family: var(--font-h);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 28px;
+    }
+    .bk-cta-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .booking-cta-card h3 {
+      font-family: var(--font-h);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+    .booking-cta-card p {
+      font-size: 0.95rem;
+      color: var(--off-white);
+      line-height: 1.65;
+      max-width: 320px;
+      margin: 0 auto 32px;
+    }
+    .bk-cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 320px;
+      margin-bottom: 36px;
+    }
+    .bk-cta-buttons .btn { width: 100%; justify-content: center; }
+    .bk-cta-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--faint);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-h);
+      margin: 4px 0;
+    }
+    .bk-cta-divider::before,
+    .bk-cta-divider::after {
+      content: '';
       flex: 1;
-      min-height: 680px;
-      border: none;
-      border-radius: var(--r3);
+      height: 1px;
+      background: var(--line);
     }
+    .bk-cta-trust {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      width: 100%;
+      max-width: 320px;
+    }
+    .bk-trust-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.86rem;
+      color: var(--off-white);
+    }
+    .bk-trust-row .trust-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .bk-trust-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 4px;
+    }
+    .bk-trust-stars span { color: var(--gold); font-size: 1rem; }
 
     /* ═══════════════════════════════════════
        FOOTER
@@ -1549,13 +1642,27 @@
         </div>
 
         <div class="booking-form">
-          <div class="calendly-wrapper">
-            <!-- Calendly inline widget -->
-            <div
-              class="calendly-inline-widget"
-              data-url="https://calendly.com/capt-aburumman/b777-auto-detailing?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=d4a847&background_color=1f1f26&text_color=f4f2ed"
-              style="min-width:320px;height:900px;"
-            ></div>
+          <div class="booking-cta-card">
+            <div class="bk-cta-badge">
+              <div class="bk-cta-badge-dot"></div>
+              <span>Now Booking — Edmond, OK</span>
+            </div>
+            <h3>Book Your Detail<br>Online Now</h3>
+            <p>Pick your service, vehicle, and preferred time slot — all in under 2 minutes.</p>
+            <div class="bk-cta-buttons">
+              <a href="book.html" class="btn btn-gold">Book Your Detail →</a>
+              <div class="bk-cta-divider">or</div>
+              <a href="tel:5722050612" class="btn btn-ghost">☎ Call 572-205-6012</a>
+            </div>
+            <div class="bk-cta-trust">
+              <div class="bk-trust-stars">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <div class="bk-trust-row"><div class="trust-dot"></div>Response within the hour</div>
+              <div class="bk-trust-row"><div class="trust-dot"></div>We come to you — no drop-off</div>
+              <div class="bk-trust-row"><div class="trust-dot"></div>No cancellation fees, ever</div>
+              <div class="bk-trust-row"><div class="trust-dot"></div>Available 7 days a week</div>
+            </div>
           </div>
         </div>
 
@@ -1752,8 +1859,6 @@
   })();
   </script>
 
-  <!-- Calendly widget -->
-  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
 </body>
 </html>
