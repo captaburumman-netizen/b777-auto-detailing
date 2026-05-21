@@ -8,7 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="booking-app.css" />
+  <style>
+    #square-embed-wrap {
+      min-height: 600px;
+      padding: 48px 0 80px;
+    }
+  </style>
 
   <style>
     /* ── Design tokens (same as index.html) ──────────────────── */
@@ -421,286 +426,11 @@
   </header>
 
 
-  <!-- ── Booking App ───────────────────────────────────────── -->
+  <!-- ── Booking Widget ───────────────────────────────────── -->
   <section id="booking-embed" aria-label="Online booking">
-    <div class="wrap">
-      <div id="booking-app">
-
-        <div id="bk-app-body">
-          <!-- Progress indicator -->
-          <div class="bk-progress-wrap">
-            <div class="bk-steps-bar">
-              <div class="bk-step-item active" data-step="1"><div class="bk-step-num">1</div><div class="bk-step-label">Service</div></div>
-              <div class="bk-connector" data-after="1"></div>
-              <div class="bk-step-item" data-step="2"><div class="bk-step-num">2</div><div class="bk-step-label">Vehicle</div></div>
-              <div class="bk-connector" data-after="2"></div>
-              <div class="bk-step-item" data-step="3"><div class="bk-step-num">3</div><div class="bk-step-label">Add-ons</div></div>
-              <div class="bk-connector" data-after="3"></div>
-              <div class="bk-step-item" data-step="4"><div class="bk-step-num">4</div><div class="bk-step-label">Schedule</div></div>
-              <div class="bk-connector" data-after="4"></div>
-              <div class="bk-step-item" data-step="5"><div class="bk-step-num">5</div><div class="bk-step-label">Details</div></div>
-              <div class="bk-connector" data-after="5"></div>
-              <div class="bk-step-item" data-step="6"><div class="bk-step-num">6</div><div class="bk-step-label">Confirm</div></div>
-            </div>
-          </div>
-
-          <!-- Layout: steps + sidebar -->
-          <div class="bk-layout">
-
-            <!-- Steps panel -->
-            <div class="bk-main-panel">
-
-              <!-- Step 1: Service -->
-              <div class="bk-step-panel active" id="step-1">
-                <div class="bk-step-header">
-                  <h3>Select Your Service</h3>
-                  <p>Choose the package that best fits your needs</p>
-                </div>
-                <div class="bk-service-grid">
-                  <div class="bk-svc-card" data-service="basic">
-                    <div class="check-ring"></div>
-                    <div class="bk-svc-tier">Exterior + Interior</div>
-                    <div class="bk-svc-name">Basic Wash</div>
-                    <div class="bk-svc-desc">Routine maintenance keeping your vehicle fresh week to week.</div>
-                    <div class="bk-svc-price">$120 <span>/ visit</span></div>
-                  </div>
-                  <div class="bk-svc-card" data-service="exterior">
-                    <div class="check-ring"></div>
-                    <div class="bk-svc-tier">Exterior Only</div>
-                    <div class="bk-svc-name">Exterior Detail</div>
-                    <div class="bk-svc-desc">Restore and protect your vehicle's exterior shine.</div>
-                    <div class="bk-svc-price">$79 <span>/ visit</span></div>
-                  </div>
-                  <div class="bk-svc-card" data-service="interior">
-                    <div class="check-ring"></div>
-                    <div class="bk-svc-tier">Interior Only</div>
-                    <div class="bk-svc-name">Interior Detail</div>
-                    <div class="bk-svc-desc">Deep clean for a fresh, like-new interior feel.</div>
-                    <div class="bk-svc-price">$179 <span>/ visit</span></div>
-                  </div>
-                  <div class="bk-svc-card" data-service="complete">
-                    <div class="bk-popular-badge">Best Value</div>
-                    <div class="check-ring"></div>
-                    <div class="bk-svc-tier">Full Detail</div>
-                    <div class="bk-svc-name">Complete Detail</div>
-                    <div class="bk-svc-desc">Full vehicle transformation with premium protection.</div>
-                    <div class="bk-svc-price">$299 <span>/ visit</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Step 2: Vehicle -->
-              <div class="bk-step-panel" id="step-2">
-                <div class="bk-step-header">
-                  <h3>Vehicle Details</h3>
-                  <p>Tell us about your car so we can price accurately</p>
-                </div>
-                <div class="bk-vehicle-types">
-                  <button class="bk-vtype-btn" data-vtype="sedan">
-                    <span class="bk-vtype-icon">🚗</span>
-                    <span class="bk-vtype-label">Sedan / Coupe</span>
-                    <span class="bk-vtype-surcharge">Base price</span>
-                  </button>
-                  <button class="bk-vtype-btn" data-vtype="suv">
-                    <span class="bk-vtype-icon">🚙</span>
-                    <span class="bk-vtype-label">SUV / Crossover</span>
-                    <span class="bk-vtype-surcharge">+$20</span>
-                  </button>
-                  <button class="bk-vtype-btn" data-vtype="truck">
-                    <span class="bk-vtype-icon">🛻</span>
-                    <span class="bk-vtype-label">Truck / Pickup</span>
-                    <span class="bk-vtype-surcharge">+$20</span>
-                  </button>
-                  <button class="bk-vtype-btn" data-vtype="van">
-                    <span class="bk-vtype-icon">🚐</span>
-                    <span class="bk-vtype-label">Van / Minivan</span>
-                    <span class="bk-vtype-surcharge">+$30</span>
-                  </button>
-                  <button class="bk-vtype-btn" data-vtype="oversized">
-                    <span class="bk-vtype-icon">🚌</span>
-                    <span class="bk-vtype-label">Oversized / Lifted</span>
-                    <span class="bk-vtype-surcharge">+$40</span>
-                  </button>
-                </div>
-                <div class="bk-field-row">
-                  <div class="bk-field">
-                    <label for="veh-make">Make</label>
-                    <input id="veh-make" type="text" placeholder="e.g. Toyota" autocomplete="off">
-                  </div>
-                  <div class="bk-field">
-                    <label for="veh-model">Model</label>
-                    <input id="veh-model" type="text" placeholder="e.g. Camry" autocomplete="off">
-                  </div>
-                </div>
-                <div class="bk-field-row">
-                  <div class="bk-field">
-                    <label for="veh-condition">Condition</label>
-                    <select id="veh-condition">
-                      <option value="normal">Normal</option>
-                      <option value="lightly_soiled">Lightly Soiled</option>
-                      <option value="heavily_soiled">Heavily Soiled</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="bk-field-row single">
-                  <div class="bk-field">
-                    <label for="veh-notes">Notes (optional)</label>
-                    <textarea id="veh-notes" placeholder="e.g. Dog hair, child seat stains, scratches…"></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Step 3: Add-ons -->
-              <div class="bk-step-panel" id="step-3">
-                <div class="bk-step-header">
-                  <h3>Add-On Services</h3>
-                  <p>Optional extras — add as many as you need</p>
-                </div>
-                <div class="bk-addon-grid">
-                  <div class="bk-addon-card" data-addon="pet_hair">
-                    <div class="addon-left"><div class="bk-addon-check"></div><span class="bk-addon-name">Pet Hair Removal</span></div>
-                    <span class="bk-addon-price">+$50</span>
-                  </div>
-                  <div class="bk-addon-card" data-addon="headlights">
-                    <div class="addon-left"><div class="bk-addon-check"></div><span class="bk-addon-name">Headlight Restoration</span></div>
-                    <span class="bk-addon-price">+$120</span>
-                  </div>
-                  <div class="bk-addon-card" data-addon="shampoo">
-                    <div class="addon-left"><div class="bk-addon-check"></div><span class="bk-addon-name">Shampoo Carpets &amp; Seats</span></div>
-                    <span class="bk-addon-price">+$50</span>
-                  </div>
-                  <div class="bk-addon-card" data-addon="steam">
-                    <div class="addon-left"><div class="bk-addon-check"></div><span class="bk-addon-name">Steam Carpets &amp; Seats</span></div>
-                    <span class="bk-addon-price">+$30</span>
-                  </div>
-                  <div class="bk-addon-card" data-addon="clay">
-                    <div class="addon-left"><div class="bk-addon-check"></div><span class="bk-addon-name">Clay Bar Treatment</span></div>
-                    <span class="bk-addon-price">+$50</span>
-                  </div>
-                  <div class="bk-addon-card" data-addon="engine">
-                    <div class="addon-left"><div class="bk-addon-check"></div><span class="bk-addon-name">Engine Bay Cleaning</span></div>
-                    <span class="bk-addon-price">+$75</span>
-                  </div>
-                  <div class="bk-addon-card" data-addon="ceramic">
-                    <div class="addon-left"><div class="bk-addon-check"></div><span class="bk-addon-name">Spray Ceramic Sealant</span></div>
-                    <span class="bk-addon-price">+$40</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Step 4: Schedule -->
-              <div class="bk-step-panel" id="step-4">
-                <div class="bk-step-header">
-                  <h3>Pick a Date &amp; Time</h3>
-                  <p>Available Monday–Saturday. Booking opens 24 hrs in advance.</p>
-                </div>
-                <div class="bk-cal-header">
-                  <button class="bk-cal-nav" id="cal-prev" aria-label="Previous month">&#8249;</button>
-                  <div class="bk-cal-title" id="cal-title"></div>
-                  <button class="bk-cal-nav" id="cal-next" aria-label="Next month">&#8250;</button>
-                </div>
-                <div class="bk-cal-grid" id="cal-grid"></div>
-                <div id="time-slots-wrap" class="bk-time-slots">
-                  <p style="color:var(--muted);font-size:0.86rem;">Select a date above to see available times.</p>
-                </div>
-              </div>
-
-              <!-- Step 5: Contact Details -->
-              <div class="bk-step-panel" id="step-5">
-                <div class="bk-step-header">
-                  <h3>Your Details</h3>
-                  <p>We'll use this to confirm your appointment and find your car</p>
-                </div>
-                <div class="bk-field-row">
-                  <div class="bk-field">
-                    <label for="contact-first">First Name</label>
-                    <input id="contact-first" type="text" placeholder="John" autocomplete="given-name">
-                  </div>
-                  <div class="bk-field">
-                    <label for="contact-last">Last Name</label>
-                    <input id="contact-last" type="text" placeholder="Smith" autocomplete="family-name">
-                  </div>
-                </div>
-                <div class="bk-field-row">
-                  <div class="bk-field">
-                    <label for="contact-phone">Phone Number</label>
-                    <input id="contact-phone" type="tel" placeholder="(405) 555-0100" autocomplete="tel">
-                  </div>
-                  <div class="bk-field">
-                    <label for="contact-email">Email Address</label>
-                    <input id="contact-email" type="email" placeholder="john@example.com" autocomplete="email">
-                  </div>
-                </div>
-                <div class="bk-field-row single">
-                  <div class="bk-field">
-                    <label for="contact-addr">Service Address</label>
-                    <input id="contact-addr" type="text" placeholder="123 Main St" autocomplete="street-address">
-                  </div>
-                </div>
-                <div class="bk-field-row">
-                  <div class="bk-field">
-                    <label for="contact-city">City</label>
-                    <input id="contact-city" type="text" placeholder="Edmond" autocomplete="address-level2">
-                  </div>
-                  <div class="bk-field">
-                    <label for="contact-zip">ZIP Code</label>
-                    <input id="contact-zip" type="text" placeholder="73034" maxlength="5" autocomplete="postal-code">
-                  </div>
-                </div>
-                <div class="bk-field-row single">
-                  <div class="bk-field">
-                    <label for="contact-notes">Special Instructions (optional)</label>
-                    <textarea id="contact-notes" placeholder="Gate code, parking instructions, etc."></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Step 6: Review & Confirm -->
-              <div class="bk-step-panel" id="step-6">
-                <div class="bk-step-header">
-                  <h3>Review Your Booking</h3>
-                  <p>Check everything looks right before confirming</p>
-                </div>
-                <div id="review-content"></div>
-              </div>
-
-              <!-- Error -->
-              <div class="bk-error" id="bk-error"></div>
-
-              <!-- Nav -->
-              <div class="bk-nav">
-                <button class="btn btn-ghost" id="bk-back" style="visibility:hidden;">← Back</button>
-                <button class="btn btn-gold"  id="bk-next">Continue →</button>
-              </div>
-            </div><!-- /bk-main-panel -->
-
-            <!-- Sidebar -->
-            <div class="bk-sidebar-panel">
-              <div class="bk-summary-box">
-                <div class="bk-summary-head"><h4>Order Summary</h4></div>
-                <div class="bk-summary-body" id="summary-body">
-                  <p class="bk-sum-empty">Select a service to see your summary</p>
-                </div>
-                <div class="bk-summary-total">
-                  <span class="tl">Estimated Total</span>
-                  <span class="tv" id="summary-total">$0</span>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /bk-layout -->
-        </div><!-- /bk-app-body -->
-
-        <!-- Success screen -->
-        <div id="bk-success" class="bk-success" hidden>
-          <div class="bk-success-icon">✓</div>
-          <h3>You're All Set!</h3>
-          <p>We've received your booking. Expect a confirmation call or text within the hour to verify your appointment.</p>
-          <div class="bk-success-details bk-review-section" id="success-details"></div>
-          <a href="index.html" class="btn btn-gold">← Back to Home</a>
-        </div>
-
-      </div><!-- /booking-app -->
+    <div id="square-embed-wrap">
+      <!-- Square Appointments -->
+      <script src='https://square.site/appointments/buyer/widget/69zk8429gv7oyq/LAVR2BPZ902JV.js'></script>
     </div>
   </section>
 
@@ -947,7 +677,7 @@
   })();
   </script>
 
-  <script src="booking-app.js" defer></script>
+
 
 </body>
 </html>
